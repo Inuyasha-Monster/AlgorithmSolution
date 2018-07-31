@@ -8,7 +8,8 @@ namespace Lesson1_2
         {
             // 问题描述: 实现冒泡排序
 
-            int[] inputsInts = { 6, 1, 3, 0, 5, 3, 5, 2, 8 };
+            int[] inputsInts = { 4, 3, 2 };
+            //int[] inputsInts = { 6, 1, 3, 0, 5, 3, 5, 2, 8 };
             var bubbleSortAsc = BubbleSortAsc(inputsInts);
             foreach (var i in bubbleSortAsc)
             {
@@ -17,7 +18,8 @@ namespace Lesson1_2
 
             Console.WriteLine("-------------华丽的分割线------------------");
 
-            int[] inputs = { 6, 1, 3, 0, 5, 3, 5, 2, 8 };
+            int[] inputs = { 4, 3, 2 };
+            //int[] inputs = { 6, 1, 3, 0, 5, 3, 5, 2, 8 };
             var bubbleSortDesc = BubbleSortDesc(inputs);
             foreach (var i in bubbleSortDesc)
             {
