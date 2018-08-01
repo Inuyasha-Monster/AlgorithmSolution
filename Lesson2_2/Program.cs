@@ -31,8 +31,10 @@ namespace Lesson2_2
 
             var array = str.ToArray();
 
+            // 找到char数组的分割线
             int mediumIndex = array.Length / 2 - 1;
 
+            // 初始化后一半的开始坐标
             int f;
             if (array.Length % 2 != 0)
             {
@@ -43,6 +45,7 @@ namespace Lesson2_2
                 f = mediumIndex + 1;
             }
 
+            // 循环比较对称的字符是否一致
             for (int i = mediumIndex; i >= 0; i--)
             {
                 if (array[i] != array[f])
