@@ -40,6 +40,7 @@ namespace Lesson2_3
             Queue<int> queueB = new Queue<int>(arrB);
             Stack<int> stack = new Stack<int>();
 
+            int i = 0;
             while (queueA.Count != 0 && queueB.Count != 0)
             {
                 // A出牌
@@ -77,7 +78,11 @@ namespace Lesson2_3
                 {
                     stack.Push(bDequeue);
                 }
+
+                i++;
             }
+
+            Console.WriteLine($"一共进行了 {i} 轮出牌结束游戏");
 
             if (queueA.Count == 0) return "A 赢了";
             return "B 赢了";
