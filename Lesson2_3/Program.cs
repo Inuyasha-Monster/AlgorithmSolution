@@ -22,9 +22,15 @@ namespace Lesson2_3
             int[] arrA = new[] { 2, 4, 1, 2, 5, 6 };
             int[] arrB = new[] { 3, 1, 3, 5, 6, 4 };
 
+            Console.WriteLine("原版:");
             var xiaoMaoDiaoYu = XiaoMaoDiaoYu(arrA, arrB);
-
             Console.WriteLine(xiaoMaoDiaoYu);
+
+            Console.WriteLine();
+            Console.WriteLine("优化版:");
+            var xiaoMaoDiaoYuOptimize = XiaoMaoDiaoYuOptimize(arrA,arrB);
+
+            Console.WriteLine(xiaoMaoDiaoYuOptimize);
         }
 
         /// <summary>
@@ -84,7 +90,132 @@ namespace Lesson2_3
 
             Console.WriteLine($"一共进行了 {i} 轮出牌结束游戏");
 
-            if (queueA.Count == 0) return "A 赢了";
+            if (queueA.Count == 0)
+            {
+                Console.WriteLine($"B 手中的牌如下:");
+                foreach (var b in queueB)
+                {
+                    Console.Write($"{b} ");
+                }
+                Console.WriteLine();
+                Console.WriteLine("桌面上的牌如下:");
+                foreach (var s in stack)
+                {
+                    Console.Write($"{s} ");
+                }
+                Console.WriteLine();
+                return "A 赢了";
+            }
+
+            Console.WriteLine($"A 手中的牌如下:");
+            foreach (var b in queueA)
+            {
+                Console.Write($"{b} ");
+            }
+            Console.WriteLine("桌面上的牌如下:");
+            foreach (var s in stack)
+            {
+                Console.Write($"{s} ");
+            }
+
+            Console.WriteLine();
+            return "B 赢了";
+        }
+
+
+        /// <summary>
+        /// 小猫钓鱼(默认A先出牌)-在出牌阶段需要判断桌面牌中是否有与将要出的牌一致的情况,使用HashSet优化是的复杂度O(1)
+        /// </summary>
+        /// <param name="arrA">A手中的扑克牌</param>
+        /// <param name="arrB">B手中的扑克牌</param>
+        /// <returns></returns>
+        private static string XiaoMaoDiaoYuOptimize(int[] arrA, int[] arrB)
+        {
+            // 1. 用 queue stack 现成的数据结构解答
+            Queue<int> queueA = new Queue<int>(arrA);
+            Queue<int> queueB = new Queue<int>(arrB);
+            Stack<int> stack = new Stack<int>();
+            HashSet<int> hashSet = new HashSet<int>();
+
+            int i = 0;
+            while (queueA.Count != 0 && queueB.Count != 0)
+            {
+                // A出牌
+                var dequeue = queueA.Dequeue();
+                // 是否stack桌面牌中有和A出牌相同的,有就两张相同的牌及其中间所夹的牌全部取走加入A的队尾
+                if (hashSet.Contains(dequeue))
+                {
+                    queueA.Enqueue(dequeue);
+                    while (stack.Peek() != dequeue)
+                    {
+                        var pop = stack.Pop();
+                        hashSet.Remove(pop);
+                        queueA.Enqueue(pop);
+                    }
+                    hashSet.Remove(stack.Peek());
+                    queueA.Enqueue(stack.Pop());
+                }
+                else
+                {
+                    // 否则加入栈顶
+                    stack.Push(dequeue);
+                    hashSet.Add(dequeue);
+                }
+
+                // B出牌
+                var bDequeue = queueB.Dequeue();
+                // 同理判断是否stack桌面牌中有和B出牌相同的,有就两张相同的牌及其中间所夹的牌全部取走加入B的队尾
+                if (hashSet.Contains(bDequeue))
+                {
+                    queueB.Enqueue(bDequeue);
+                    while (stack.Peek() != bDequeue)
+                    {
+                        hashSet.Remove(stack.Peek());
+                        queueB.Enqueue(stack.Pop());
+                    }
+                    hashSet.Remove(stack.Peek());
+                    queueB.Enqueue(stack.Pop());
+                }
+                else
+                {
+                    stack.Push(bDequeue);
+                    hashSet.Add(bDequeue);
+                }
+
+                i++;
+            }
+
+            Console.WriteLine($"一共进行了 {i} 轮出牌结束游戏");
+
+            if (queueA.Count == 0)
+            {
+                Console.WriteLine($"B 手中的牌如下:");
+                foreach (var b in queueB)
+                {
+                    Console.Write($"{b} ");
+                }
+                Console.WriteLine();
+                Console.WriteLine("桌面上的牌如下:");
+                foreach (var s in stack)
+                {
+                    Console.Write($"{s} ");
+                }
+                Console.WriteLine();
+                return "A 赢了";
+            }
+
+            Console.WriteLine($"A 手中的牌如下:");
+            foreach (var b in queueA)
+            {
+                Console.Write($"{b} ");
+            }
+            Console.WriteLine("桌面上的牌如下:");
+            foreach (var s in stack)
+            {
+                Console.Write($"{s} ");
+            }
+
+            Console.WriteLine();
             return "B 赢了";
         }
     }
