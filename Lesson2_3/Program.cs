@@ -19,7 +19,7 @@ namespace Lesson2_3
             //    为 3 1 3 5 6 4，最终谁会获胜呢？现在你可以拿出纸牌来试一试。接下来请你写一个程序来
             //    自动判断谁将获胜。这里我们做一个约定，小哼和小哈手中牌的牌面只有 1~9。
 
-            int[] arrA = new[] { 2, 4, 1, 2, 5, 6 };
+            int[] arrA = new[] { 2, 4, 7, 2, 5, 6 };
             int[] arrB = new[] { 3, 1, 3, 5, 6, 4 };
 
             Console.WriteLine("原版:");
@@ -112,6 +112,7 @@ namespace Lesson2_3
             {
                 Console.Write($"{b} ");
             }
+            Console.WriteLine();
             Console.WriteLine("桌面上的牌如下:");
             foreach (var s in stack)
             {
@@ -209,6 +210,7 @@ namespace Lesson2_3
             {
                 Console.Write($"{b} ");
             }
+            Console.WriteLine();
             Console.WriteLine("桌面上的牌如下:");
             foreach (var s in stack)
             {
